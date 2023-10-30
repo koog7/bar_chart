@@ -3,46 +3,14 @@
   margin-left: 10vw;
 }
 
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 .gradient-text {
-  background-image: linear-gradient(to top, #2ebf91 , #8360c3  ); 
-  -webkit-background-clip: text; 
-  color: transparent; 
-  display: inline-block; 
+  background-image: linear-gradient(to top, #00CFBC, #8B00F7);
+  -webkit-background-clip: text;
+  color: transparent;
+  display: inline-block;
   padding-left: 3vw;
+  font-size: 64px;
+  font-weight: 700;
 }
 
 /* Стили для десктопной версии */
@@ -51,33 +19,234 @@
   justify-content: left;
   flex-direction: column;
 }
-.text-proceeds{
-  font-weight: 700;
+
+.text-proceeds {
+  font-weight: 500;
+  font-size: 32px;
   padding-left: 5vw;
 }
+
+.top-section h2,
+.top-section p {
+  margin: 0;
+  /* Измените это значение по вашему усмотрению */
+}
+
 .row {
   display: flex;
   align-items: center;
 }
-#info_a{
+
+#info_a {
   font-size: 2rem;
   color: #27EFDA;
   font-weight: 700;
+  font-size: 72px;
 }
+
+#info {
+  font-size: 30px;
+}
+
+.info-section,
+gradient-text,
+text-proceeds,
+usd-label {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 /* body{
   border: 1px solid red;
 } */
+.usd-label {
+  border-right: 1px solid black;
+  height: 80%;
+  writing-mode: vertical-rl;
+}
+
+.usd-label p {
+  padding-top: 18vw;
+  transform: rotate(180deg);
+  font-weight: 500;
+  font-size: 24px;
+}
+
 @media (max-width: 700px) {
   .top-section {
     flex-direction: column;
   }
+
   .row {
     flex-direction: column;
   }
+
   .mixed-chart {
     width: 100%;
   }
+
+  .usd-label {
+    display: none;
+  }
+
+  .gradient-text {
+    font-size: 1.8rem;
+  }
+
+  .text-proceeds {
+    font-size: 1.3rem;
+  }
+
+  #info_a {
+    font-size: 2rem;
+  }
+
+  #info {
+    font-size: 1.3rem;
+  }
 }
+@media (min-width: 701px) and (max-width: 1023px) {
 
+  .top-section {
+    flex-direction: column;
+  }
 
+  .row {
+    flex-direction: row;
+  }
+  /* .usd-label {
+    display: none;
+  } */
+  .mixed-chart {
+    width: 60%;
+    height: auto;
+  }
 
+  .gradient-text {
+    font-size: 1.8rem;
+  }
+
+  .text-proceeds {
+    font-size: 1.3rem;
+  }
+
+  #info_a {
+    font-size: 2rem;
+  }
+
+  #info {
+    font-size: 1.3rem;
+  }
+  .usd-label{
+    height: 40%;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1439px) {
+  /* стили для ноутбуков */
+  .top-section {
+    flex-direction: column;
+  }
+
+  .row {
+    flex-direction: row;
+  }
+  /* .usd-label {
+    display: none;
+  } */
+  .mixed-chart {
+    width: 60%;
+    height: auto;
+  }
+
+  .gradient-text {
+    font-size: 1.8rem;
+  }
+
+  .text-proceeds {
+    font-size: 1.3rem;
+  }
+
+  #info_a {
+    font-size: 3rem;
+  }
+
+  #info {
+    font-size: 1.3rem;
+  }
+  .usd-label{
+    height: 60%;
+  }
+}
+@media (min-width: 1440px) and (max-width: 1919px) {
+  /* Ваши стили для больших ноутбуков */
+  .top-section {
+    flex-direction: column;
+  }
+
+  .row {
+    flex-direction: row;
+  }
+  /* .usd-label {
+    display: none;
+  } */
+  .mixed-chart {
+    width: 60%;
+    height: auto;
+  }
+
+  .gradient-text {
+    font-size: 1.8rem;
+  }
+
+  .text-proceeds {
+    font-size: 1.3rem;
+  }
+
+  #info_a {
+    font-size: 4rem;
+  }
+
+  #info {
+    font-size: 1.3rem;
+  }
+  .usd-label{
+    height: 75%;
+  }
+}
+@media (min-width: 1920px) {
+  .top-section {
+    flex-direction: column;
+  }
+
+  .row {
+    flex-direction: row;
+  }
+  /* .usd-label {
+    display: none;
+  } */
+  .mixed-chart {
+    width: 60%;
+    height: auto;
+  }
+
+  .gradient-text {
+    font-size: 4rem;
+  }
+
+  .text-proceeds {
+    font-size: 2rem;
+  }
+
+  #info_a {
+    font-size: 6rem;
+  }
+
+  #info {
+    font-size: 3rem;
+  }
+  .usd-label{
+    height: 75%;
+  }
+}
+/* *{
+  border: 1px solid red;
+} */

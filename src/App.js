@@ -14,7 +14,8 @@ class App extends Component {
     this.state = {
       options: {
         chart: {
-          id: "basic-bar"
+          id: "basic-bar",
+          width: 300,
         },
         xaxis: {
           categories: []
@@ -23,7 +24,9 @@ class App extends Component {
           bar: {
             dataLabels: {
               position: "center",
-            }
+            },
+            columnWidth: "50%",
+            
           }
         },
         dataLabels: {
@@ -39,7 +42,38 @@ class App extends Component {
           gradient: {
             shade: "light",
             type: "vertical",
-            gradientToColors: ["#8360c3", "#2ebf91"]
+            opacityFrom: 0.4,
+            opacityTo: 1,
+            
+            colorStops: [
+              {
+                offset: 10,
+                color: "#000080",
+                opacity: 1
+              },
+              {
+                offset: 80,
+                color: "#00CFBC",
+                opacity: 1
+              },
+              
+            ]
+          }
+        },
+        grid: {
+          show: false // Этот параметр скроет сетку графика
+        },
+        yaxis: {
+          labels: {
+            formatter: function (value) {
+              if (value >= 1000000) {
+                return (value / 1000000).toFixed(1) + "M";
+              } else if (value >= 1000) {
+                return (value / 1000).toFixed(1) + "K";
+              } else {
+                return value;
+              }
+            }
           }
         },
         responsive: [
@@ -57,6 +91,7 @@ class App extends Component {
           }
         ]
       },
+      
       itCompanies: [],
       jobsCreated: [],
       taxes: []
@@ -65,17 +100,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
     fetch("https://raw.githubusercontent.com/koog7/db_json/main/jsonplaceholder.json")
       .then(response => response.json())
       .then(data => {
-        
         const categories = data.map(item => item.year);
-  
+        const originalTaxes = data.map(item => item.taxes); 
         this.setState({
           itCompanies: data[0].it_companies,
           jobsCreated: data.map(item => item.jobs_created),
-          taxes: data.map(item => item.taxes),
+          taxes: originalTaxes, 
+          originalTaxes: originalTaxes, 
           options: {
             ...this.state.options,
             xaxis: {
@@ -87,6 +121,7 @@ class App extends Component {
       .catch(error => console.error("Ошибка запроса:", error));
   }
   
+  
 
   render() {
     return (
@@ -96,6 +131,9 @@ class App extends Component {
           <p className="text-proceeds">Proceeds</p>
         </div>
         <div className="row">
+          <div className="usd-label">
+          <p>USD</p>
+          </div>
           <div className="mixed-chart">
             <Chart
               options={this.state.options}
@@ -106,13 +144,16 @@ class App extends Component {
                 }
               ]}
               type="bar"
-              width="500"
+              // width="1000"
             />
           </div>
           <div className="info-section">
-            <p id="info"><a id="info_a">{this.state.itCompanies.length}</a> It Companies</p>
+            <p id="info"><a id="info_a">{this.state.itCompanies.reduce((total, companiesArray) => total + companiesArray.length, 0)}</a> It Companies</p>
             <p id="info"><a id="info_a">{this.state.jobsCreated.reduce((acc, val) => acc + val, 0)}</a> Jobs Created</p>
-            <p id="info"><a id="info_a">{this.state.taxes.reduce((acc, val) => acc + val, 0)}</a> Taxes paid</p>
+            <p id="info"><a id="info_a" >{this.state.taxes.reduce((acc, val) => acc + val, 0) >= 1000000
+                                        ? (this.state.taxes.reduce((acc, val) => acc + val, 0) / 1000000).toFixed(1) + " m"
+                                        : this.state.taxes.reduce((acc, val) => acc + val, 0) + " Taxes paid"
+                                        }</a> Taxes paid</p>
           </div>
         </div>
       </div>
