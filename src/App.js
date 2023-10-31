@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import "./App.css"
@@ -6,11 +5,18 @@ import "./App.css"
 // https://github.com/koog7/jsonplacegolder_db/blob/main/jsonplaceholder.json
 // npm install --save react-apexcharts apexcharts
 
+const chartData = [
+  {
+    category: "Category -1",
+    value: 10,
+    color: "blue" // Устанавливаем цвет для этого столбца
+  }
+];
 
 class App extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       options: {
         chart: {
@@ -26,7 +32,6 @@ class App extends Component {
               position: "center",
             },
             columnWidth: "50%",
-            
           }
         },
         dataLabels: {
@@ -44,8 +49,8 @@ class App extends Component {
             type: "vertical",
             opacityFrom: 0.4,
             opacityTo: 1,
-            
-            colorStops: [
+            colorStops: 
+            [
               {
                 offset: 10,
                 color: "#000080",
@@ -56,7 +61,6 @@ class App extends Component {
                 color: "#00CFBC",
                 opacity: 1
               },
-              
             ]
           }
         },
@@ -76,6 +80,14 @@ class App extends Component {
             }
           }
         },
+        stroke: {
+          show: true,
+          curve: 'smooth',
+          lineCap: 'butt',
+          colors: undefined,
+          width: 1,
+          dashArray: 0, 
+      },
         responsive: [
           {
             breakpoint: 700,
@@ -98,18 +110,27 @@ class App extends Component {
     };
     
   }
-
+  
   componentDidMount() {
     fetch("https://raw.githubusercontent.com/koog7/db_json/main/jsonplaceholder.json")
       .then(response => response.json())
       .then(data => {
         const categories = data.map(item => item.year);
-        const originalTaxes = data.map(item => item.taxes); 
+        const originalTaxes = data.map(item => item.taxes);
+        
+        // Уменьшите последний элемент в данных только для отображения
+        const lastYearIndex = originalTaxes.length - 1;
+        const modifiedTaxes = [...originalTaxes];
+        modifiedTaxes[lastYearIndex] /= 2;
+        
+        // Обновите данные только для последнего столбца
+        data[lastYearIndex].taxes = modifiedTaxes[lastYearIndex];
+  
         this.setState({
           itCompanies: data[0].it_companies,
           jobsCreated: data.map(item => item.jobs_created),
-          taxes: originalTaxes, 
-          originalTaxes: originalTaxes, 
+          taxes: originalTaxes,
+          originalTaxes: originalTaxes,
           options: {
             ...this.state.options,
             xaxis: {
@@ -120,6 +141,7 @@ class App extends Component {
       })
       .catch(error => console.error("Ошибка запроса:", error));
   }
+  
   
   
 
